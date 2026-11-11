@@ -1,0 +1,8 @@
+services:
+  archiwise-backend-development:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: archiwise-backend-development
+    ports:
+      - "${PORT}:${PORT}"

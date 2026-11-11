@@ -1,0 +1,18 @@
+services:
+  whoosh_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whoosh_app_container
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      # Mapeia a pasta local "uploads" para dentro do contêiner,
+      # garantindo persistência dos arquivos enviados
+      - ./uploads:/app/uploads
+
+      # Mapeia a pasta "indexdir" para persistir o índice do Whoosh
+      - ./indexdir:/app/indexdir
+    # Se quiser rodar no modo "development", deixe como está;
+    # Caso queira rodar em "production", pode remover
+    # a flag debug=True no app.py ou configurar de outra forma.

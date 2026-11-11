@@ -1,0 +1,10 @@
+flask
+whoosh
+python-docx
+PyPDF2
+fastapi
+uvicorn
+numpy
+python-multipart
+loadenv
+python-dotenv

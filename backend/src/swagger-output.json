@@ -1,0 +1,1149 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Archiwise",
+    "description": "Documentação da API Archiwise",
+    "version": "1.0.0"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/v1/users/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/users/forgot-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/users/reset-password": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "any"
+                },
+                "newPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/users/verify-password-reset/{token}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/auth/": {
+      "patch": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/auth/update-password": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "example": "any"
+                },
+                "newPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/docs/": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Retorna todos os documentos do usuário autenticado. Possui filtros opcionais: categoryId, startDate e endDate. Caso startDate e endDate sejam informados, filtra por um período; se apenas startDate for informado, filtra pelo dia exato.",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "isFavorite",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "ID da categoria para filtrar os documentos",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Data de início para filtro (Formato: YYYY-MM-DD). Se endDate for informada, define o início do período; caso contrário, filtra o dia exato.",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Data de fim para filtro de período (Formato: YYYY-MM-DD). Opcional, caso seja informada junto com startDate define o intervalo.",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "isDeleted",
+            "in": "query",
+            "description": "Flag que indica se o Documento está ou não na lixeira.",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de documentos do usuário.",
+            "schema": {
+              "$ref": "#/definitions/Documents"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Cria um novo documento para o usuário autenticado.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Arquivo do documento que será enviado",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Campos necessários para criar o documento",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDocumentSchema"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Documento criado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          },
+          "422": {
+            "description": "Erro de validação de schema ou arquivo não encontrado.",
+            "schema": {
+              "$ref": "#/definitions/Error422"
+            }
+          }
+        }
+      }
+    },
+    "/v1/docs/search": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Realiza uma busca avançada de documentos com base nos filtros fornecidos.",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "ID da categoria para filtrar os documentos",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Data de início para filtro (Formato: YYYY-MM-DD).",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Data de fim para filtro (Formato: YYYY-MM-DD).",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Termo de pesquisa nos documentos.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de documentos encontrados.",
+            "schema": {
+              "$ref": "#/definitions/Documents"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          }
+        }
+      }
+    },
+    "/v1/docs/{fileId}": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Retorna documento com base no seu Id.",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do documento."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de documentos encontrados.",
+            "schema": {
+              "$ref": "#/definitions/Documents"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Deleta um documento pelo ID. O documento será movido para a lixeira.",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do documento a ser deletado."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Documento deletado com sucesso. Sem conteúdo na resposta."
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          },
+          "404": {
+            "description": "Documento não encontrado.",
+            "schema": {
+              "$ref": "#/definitions/Error404"
+            }
+          }
+        }
+      }
+    },
+    "/v1/docs/restore/{fileId}": {
+      "put": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Restaura um documento previamente deletado.",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do documento a ser restaurado."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento restaurado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          },
+          "404": {
+            "description": "Documento não encontrado.",
+            "schema": {
+              "$ref": "#/definitions/Error404"
+            }
+          }
+        }
+      }
+    },
+    "/v1/docs/{id}": {
+      "put": {
+        "tags": [
+          "Document"
+        ],
+        "description": "Atualiza o nome, o viewCount, isDeleted e a categoria de um documento.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "UUId do Documento."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Campos necessários para atualizar um documento.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateDoc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento criado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          },
+          "422": {
+            "description": "Erro de validação de schema ou arquivo não encontrado.",
+            "schema": {
+              "$ref": "#/definitions/Error422"
+            }
+          }
+        }
+      }
+    },
+    "/v1/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/searches/": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Retorna todos os termos pesquisados por um usuário.",
+        "responses": {
+          "200": {
+            "description": "Lista de items pesquisados.",
+            "schema": {
+              "$ref": "#/definitions/Searches"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "description": "Registrar uma nova pesquisa de um usuário.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Campos necessários para registrar uma pesquisa de um usuário.",
+            "schema": {
+              "$ref": "#/definitions/CreateSearchSchema"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pesquisa registrada com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Search"
+            }
+          },
+          "401": {
+            "description": "Não autorizado. Usuário não autenticado.",
+            "schema": {
+              "$ref": "#/definitions/Error401"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateDocumentSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Exemplo de Documento"
+        },
+        "categoryId": {
+          "type": "string",
+          "example": "uuid-da-categoria"
+        }
+      }
+    },
+    "Documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Exemplo de Documento"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "uploadedAt": {
+            "type": "string",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "size": {
+            "type": "number",
+            "example": 1024
+          },
+          "type": {
+            "type": "string",
+            "example": "application/pdf"
+          },
+          "filePath": {
+            "type": "string",
+            "example": "/uploads/documento-exemplo.pdf"
+          },
+          "filePathPreview": {
+            "type": "string",
+            "example": "/uploads/documento-exemplo-preview.pdf"
+          },
+          "viewCount": {
+            "type": "number",
+            "example": 10
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-do-usuario"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "uuid-da-categoria"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "uuid-do-usuario"
+              },
+              "email": {
+                "type": "string",
+                "example": "usuario@example.com"
+              },
+              "name": {
+                "type": "string",
+                "example": "Nome do Usuário"
+              }
+            }
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "uuid-da-categoria"
+              },
+              "name": {
+                "type": "string",
+                "example": "Nome da Categoria"
+              }
+            }
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    },
+    "Document": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "example": "Exemplo de Documento"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-01-01T00:00:00.000Z"
+        },
+        "uploadedAt": {
+          "type": "string",
+          "example": "2023-01-01T00:00:00.000Z"
+        },
+        "size": {
+          "type": "number",
+          "example": 1024
+        },
+        "type": {
+          "type": "string",
+          "example": "application/pdf"
+        },
+        "filePath": {
+          "type": "string",
+          "example": "/uploads/documento-exemplo.pdf"
+        },
+        "filePathPreview": {
+          "type": "string",
+          "example": "/uploads/documento-exemplo-preview.pdf"
+        },
+        "viewCount": {
+          "type": "number",
+          "example": 10
+        },
+        "userId": {
+          "type": "string",
+          "example": "uuid-do-usuario"
+        },
+        "categoryId": {
+          "type": "string",
+          "example": "uuid-da-categoria"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "uuid-do-usuario"
+            },
+            "email": {
+              "type": "string",
+              "example": "usuario@example.com"
+            },
+            "name": {
+              "type": "string",
+              "example": "Nome do Usuário"
+            }
+          }
+        },
+        "category": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "uuid-da-categoria"
+            },
+            "name": {
+              "type": "string",
+              "example": "Nome da Categoria"
+            }
+          }
+        },
+        "isDeleted": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "UpdateDoc": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Exemplo de nome"
+        },
+        "viewCount": {
+          "type": "number",
+          "example": 10
+        },
+        "categoryId": {
+          "type": "string",
+          "example": "uuid-da-categoria"
+        },
+        "isDeleted": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-usuario"
+        },
+        "email": {
+          "type": "string",
+          "example": "usuario@example.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome do Usuário"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-categoria"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome da Categoria"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descrição da Categoria"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2023-01-01T00:00:00.000Z"
+        },
+        "userId": {
+          "type": "string",
+          "example": "uuid-do-usuario"
+        },
+        "color": {
+          "type": "string",
+          "example": "Código Hex de cor"
+        }
+      }
+    },
+    "Search": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-pesquisa"
+        },
+        "termSearched": {
+          "type": "string",
+          "example": "Termo pesquisado"
+        },
+        "userId": {
+          "type": "string",
+          "example": "uuid-do-usuario"
+        }
+      }
+    },
+    "Searches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-da-pesquisa"
+          },
+          "termSearched": {
+            "type": "string",
+            "example": "Termo pesquisado"
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-do-usuario"
+          }
+        }
+      }
+    },
+    "MostSearchedTerm": {
+      "type": "object",
+      "properties": {
+        "mostSearchedTerm": {
+          "type": "string",
+          "example": "termo mais pesquisado."
+        }
+      }
+    },
+    "CreateSearchSchema": {
+      "type": "object",
+      "properties": {
+        "termSearched": {
+          "type": "string",
+          "example": "termo pesquisado"
+        },
+        "userId": {
+          "type": "string",
+          "example": "uuid-do-usuário"
+        }
+      }
+    },
+    "CreateCategorySchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nome da Categoria"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descrição da Categoria"
+        }
+      }
+    },
+    "UpdateCategorySchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nome da Categoria Atualizada"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descrição da Categoria Atualizada"
+        }
+      }
+    },
+    "Error401": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Usuário não autenticado"
+        },
+        "status": {
+          "type": "string",
+          "example": "error"
+        }
+      }
+    },
+    "Error422": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Erro de validação de schema"
+        },
+        "status": {
+          "type": "string",
+          "example": "error"
+        }
+      }
+    },
+    "DownloadError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Error ao baixar arquivo"
+        },
+        "status": {
+          "type": "string",
+          "example": "error"
+        }
+      }
+    },
+    "FileNotFoundError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "File not found"
+        },
+        "status": {
+          "type": "string",
+          "example": "error"
+        }
+      }
+    }
+  }
+}

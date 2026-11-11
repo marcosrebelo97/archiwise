@@ -1,0 +1,20 @@
+# Dockerfile.dev
+FROM node:18-alpine
+
+# Define o diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copia o arquivo package.json e instala as dependências
+COPY package*.json ./
+COPY src/assets/iconify-icons ./src/assets/iconify-icons/
+
+RUN npm install
+
+# Copia o restante dos arquivos da aplicação
+COPY . .
+
+# Exponha a porta que a aplicação irá rodar
+EXPOSE 3000
+
+# Comando para iniciar a aplicação em modo de desenvolvimento
+CMD ["npm", "run", "dev"]

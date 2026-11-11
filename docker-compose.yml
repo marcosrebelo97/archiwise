@@ -1,0 +1,97 @@
+services:
+  frontend:
+    container_name: frontend_archiwise
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.development
+    ports:
+      - "${PORT_FRONTEND}:${PORT_FRONTEND}"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: "no"
+    networks:
+      - app_network_archiwise
+
+  backend:
+    container_name: backend_archiwise
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.development
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "${PORT_BACKEND}:${PORT_BACKEND}"
+    working_dir: /app
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - app_network_archiwise
+
+  gotenberg:
+    container_name: gotenberg_archiwise
+    image: gotenberg/gotenberg:8
+    ports:
+      - "${PORT_GOTENBERG}:3000"
+    networks:
+      - app_network_archiwise
+
+  indexer_api:
+    container_name: whoosh_indexer
+    build:
+      context: ./api_python
+      dockerfile: Dockerfile
+    volumes:
+      - ./api_python:/app
+    ports:
+      - "${PORT_PYTHON_WHOSH}:5000"
+    depends_on:
+      - backend
+    networks:
+      - app_network_archiwise
+
+  cat_api:
+    build:
+      context: ./api_python_cat
+      dockerfile: Dockerfile
+    container_name: cat_api
+    ports:
+      - "${PORT_PYTHON_CAT}:5000"
+    networks:
+      - app_network_archiwise
+
+  redis:
+    image: redis:6.0
+    container_name: redis_archiwise
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network_archiwise
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_archiwise
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Adicione essa linha
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network_archiwise
+
+networks:
+  app_network_archiwise:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:
+  mysql_data:

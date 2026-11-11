@@ -1,0 +1,7 @@
+/.idea
+.env
+/**/__pycache__**/.env
+**/node_modules
+backend/build/
+**/uploads/
+*service-account*.json

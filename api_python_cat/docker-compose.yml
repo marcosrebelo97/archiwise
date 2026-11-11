@@ -1,0 +1,8 @@
+services:
+  automatic_categorization:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    container_name: categorizacao_container
+    ports:
+      - "${PORT}:${PORT}"

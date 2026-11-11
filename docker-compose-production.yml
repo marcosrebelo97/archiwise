@@ -1,0 +1,99 @@
+services:
+  frontend:
+    container_name: frontend_archiwise
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT_FRONTEND}:${PORT_FRONTEND}"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: "no"
+    networks:
+      - app_network_archiwise
+
+  backend:
+    container_name: backend_archiwise
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "${PORT_BACKEND}:${PORT_BACKEND}"
+    working_dir: /app
+    networks:
+      - app_network_archiwise
+    depends_on:
+      - redis
+      - mysql
+
+  gotenberg:
+    container_name: gotenberg_archiwise
+    image: gotenberg/gotenberg:8
+    ports:
+      - "${PORT_GOTENBERG}:3000"
+    networks:
+      - app_network_archiwise
+
+  indexer_api:
+    container_name: whoosh_indexer
+    build:
+      context: ./api_python          # <-- Pasta onde fica seu Dockerfile e indexer.py
+      dockerfile: Dockerfile      # <-- Ajuste se seu arquivo tem outro nome
+    volumes:
+      - ./api_python:/app
+    ports:
+      - "${PORT_PYTHON}:5000"  # se quiser acessar externamente
+    depends_on:
+      - backend
+    networks:
+      - app_network_archiwise
+
+
+  cat_api:
+    build:
+      context: ./api_python_cat
+      dockerfile: Dockerfile
+    container_name: cat_api
+    ports:
+      - "${PORT_PYTHON_CAT}:5000"
+    networks:
+      - app_network_archiwise
+    depends_on:
+      - mysql
+
+  redis:
+    image: redis:6.0
+    container_name: redis_archiwise_production
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network_archiwise
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_archiwise_production
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PORT: ${MYSQL_PORT}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network_archiwise
+      -
+networks:
+  app_network_archiwise:
+    driver: bridge
+
+volumes:
+    redis_data:
+    mysql_data:

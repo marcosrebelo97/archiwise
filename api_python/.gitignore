@@ -1,0 +1,10 @@
+Indexacao/venv
+Indexacao/docs
+Indexacao/backend/indexdir*
+Indexacao/backend/__pycache__
+Indexacao/backend/biblia-em-txt.txt
+Indexacao/backend/__pycache__/main.cpython-312.pyc
+Indexacao/backend/custom_model
+/.idea
+/indexdir
+/uploads
